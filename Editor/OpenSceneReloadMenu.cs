@@ -48,9 +48,17 @@ public class OpenSceneReloadMenu {
 				sb.AppendLine("");
 				sb.AppendLine(string.Format("\t[MenuItem(\"Open scene/{0}\", false, 0)]", sceneNameRaw));
 				sb.AppendLine(string.Format("\tstatic void Open{0}() {{", sceneName));
-				sb.AppendLine(string.Format("\t\tUnityEditor.SceneManagement.EditorSceneManager.OpenScene(\"{0}\");", scenePath));
+				sb.AppendLine(string.Format("\t\tOpenScene(\"{0}\");", scenePath));
 				sb.AppendLine("\t}");
 			}
+
+			sb.AppendLine("");
+			sb.AppendLine("\tstatic void OpenScene(string scenePath) {");
+			sb.AppendLine("\tif (UnityEditor.SceneManagement.EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) {");
+			sb.AppendLine("\t\t\tUnityEditor.SceneManagement.EditorSceneManager.OpenScene(scenePath);");
+			sb.AppendLine("\t\t}");
+			sb.AppendLine("\t}");
+
 
 			sb.AppendLine("}");
 
